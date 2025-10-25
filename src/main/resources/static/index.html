@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greetings App - Modern Web Application</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: #f7f8fa;
+            --card-bg: #ffffff;
+            --primary-color: #4a69e2;
+            --text-color: #1a202c;
+            --subtle-text: #5a6474;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --border-radius: 12px;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text-color);
+        }
+
+        .page-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background-color: #e9efff;
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .hero-title span {
+            color: var(--primary-color);
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--subtle-text);
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        /* Interactive Section */
+        .interactive-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 32px;
+            border: 1px solid var(--border-color);
+        }
+
+        .card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+            color: var(--text-color);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            letter-spacing: -0.01em;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+            color: var(--text-color);
+            letter-spacing: -0.01em;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #9ca3af;
+            font-weight: 400;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 105, 226, 0.1);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            letter-spacing: -0.01em;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-danger {
+            background-color: var(--error-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            opacity: 0.9;
+        }
+
+        .result-box {
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 8px;
+            background-color: var(--background);
+            border: 1px solid var(--border-color);
+            font-size: 14px;
+            display: none;
+            letter-spacing: -0.01em;
+            line-height: 1.6;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .result-box.success {
+            background-color: #d1fae5;
+            border-color: var(--success-color);
+            color: #065f46;
+        }
+
+        .result-box.error {
+            background-color: #fee2e2;
+            border-color: var(--error-color);
+            color: #991b1b;
+        }
+
+        .greetings-list {
+            margin-top: 16px;
+        }
+
+        .greeting-item {
+            padding: 12px 16px;
+            background: var(--background);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 14px;
+            line-height: 1.6;
+            letter-spacing: -0.01em;
+        }
+
+        .greeting-item strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .page-container {
+                max-width: 100%;
+                padding: 0 16px;
+            }
+
+            .hero-title {
+                font-size: 40px;
+            }
+
+            .card {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .interactive-section {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-section {
+                padding: 60px 0 40px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .card h3 {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .hero-subtitle {
+                font-size: 14px;
+            }
+
+            .hero-badge {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            .description {
+                padding-left: 0;
+                margin-top: 8px;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
+            .greeting-item {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        <main class="hero-section">
+            <div class="hero-badge">✨ Welcome to Greetings App</div>
+            <h1 class="hero-title">Say Hello to<br><span>Everyone, Everywhere</span></h1>
+            <p class="hero-subtitle">Create personalized greetings, customize messages, and manage all your greetings in one place.</p>
+        </main>
+
+        <section class="interactive-section">
+            <!-- Get Greeting -->
+            <div class="card">
+                <h3>Get Personalized Greeting</h3>
+                <form id="greetingForm" onsubmit="getGreeting(event)">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" placeholder="Enter your name" value="World">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Generate Greeting</button>
+                </form>
+                <div id="greetingResult" class="result-box"></div>
+            </div>
+
+            <!-- Custom Greeting -->
+            <div class="card">
+                <h3>Custom Greeting Template</h3>
+                <form id="customForm" onsubmit="getCustomGreeting(event)">
+                    <div class="form-group">
+                        <label for="customName">Name</label>
+                        <input type="text" id="customName" placeholder="Enter name" value="Friend">
+                    </div>
+                    <div class="form-group">
+                        <label for="template">Your Custom Message</label>
+                        <input type="text" id="template" placeholder="e.g., Hi, [NAME]! Hope you're doing great!" value="Hi, [NAME]!">
+                        <small style="color: var(--subtle-text); font-size: 12px; margin-top: 4px; display: block;">
+                            Use [NAME] where you want the person's name to appear
+                        </small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Custom Greeting</button>
+                </form>
+                <div id="customResult" class="result-box"></div>
+            </div>
+
+            <!-- View All Greetings -->
+            <div class="card full-width">
+                <h3>All Greetings</h3>
+                <button class="btn btn-primary" onclick="loadGreetings()">Load All Greetings</button>
+                <div id="greetingsList" class="greetings-list"></div>
+            </div>
+
+            <!-- Create New Greeting -->
+            <div class="card">
+                <h3>Create New Greeting</h3>
+                <form id="createForm" onsubmit="createGreeting(event)">
+                    <div class="form-group">
+                        <label for="newName">Name</label>
+                        <input type="text" id="newName" placeholder="Enter name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newMessage">Message</label>
+                        <textarea id="newMessage" rows="3" placeholder="Enter your greeting message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Greeting</button>
+                </form>
+                <div id="createResult" class="result-box"></div>
+            </div>
+
+            <!-- Delete All -->
+            <div class="card">
+                <h3>Manage Greetings</h3>
+                <p style="margin-bottom: 16px; color: var(--subtle-text); font-size: 14px;">
+                    Clear all stored greetings from memory.
+                </p>
+                <button class="btn btn-danger" onclick="clearAllGreetings()">Clear All Greetings</button>
+                <div id="deleteResult" class="result-box"></div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        async function getGreeting(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const resultBox = document.getElementById('greetingResult');
+            
+            try {
+                const response = await fetch(`/api/greeting?name=${encodeURIComponent(name)}`);
+                const data = await response.json();
+                
+                resultBox.className = 'result-box show success';
+                resultBox.innerHTML = `<strong>Greeting #${data.id}:</strong> ${data.message}`;
+            } catch (error) {
+                resultBox.className = 'result-box show error';
+                resultBox.textContent = 'Error: Could not generate greeting';
+            }
+        }
+
+        async function getCustomGreeting(event) {
+            event.preventDefault();
+            const name = document.getElementById('customName').value;
+            const template = document.getElementById('template').value;
+            const resultBox = document.getElementById('customResult');
+            
+            try {
+                // Replace [NAME] with %s for the backend API
+                const apiTemplate = template.replace(/\[NAME\]/gi, '%s');
+                const response = await fetch(`/api/custom-greeting?name=${encodeURIComponent(name)}&template=${encodeURIComponent(apiTemplate)}`);
+                const data = await response.json();
+                
+                resultBox.className = 'result-box show success';
+                resultBox.innerHTML = `<strong>Greeting #${data.id}:</strong> ${data.message}`;
+            } catch (error) {
+                resultBox.className = 'result-box show error';
+                resultBox.textContent = 'Error: Could not create custom greeting';
+            }
+        }
+
+        async function loadGreetings() {
+            const listContainer = document.getElementById('greetingsList');
+            
+            try {
+                const response = await fetch('/api/greetings');
+                const greetings = await response.json();
+                
+                if (greetings.length === 0) {
+                    listContainer.innerHTML = '<p style="margin-top: 16px; color: var(--subtle-text);">No greetings yet. Create some above!</p>';
+                } else {
+                    listContainer.innerHTML = greetings.map(g => 
+                        `<div class="greeting-item">
+                            <strong>#${g.id} - ${g.name}:</strong> ${g.message}
+                        </div>`
+                    ).join('');
+                }
+            } catch (error) {
+                listContainer.innerHTML = '<p style="margin-top: 16px; color: var(--error-color);">Error loading greetings</p>';
+            }
+        }
+
+        async function createGreeting(event) {
+            event.preventDefault();
+            const name = document.getElementById('newName').value;
+            const message = document.getElementById('newMessage').value;
+            const resultBox = document.getElementById('createResult');
+            
+            try {
+                const response = await fetch('/api/greeting', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, message })
+                });
+                const data = await response.json();
+                
+                resultBox.className = 'result-box show success';
+                resultBox.innerHTML = `<strong>Success!</strong> Greeting #${data.id} created for ${data.name}`;
+                
+                document.getElementById('newName').value = '';
+                document.getElementById('newMessage').value = '';
+            } catch (error) {
+                resultBox.className = 'result-box show error';
+                resultBox.textContent = 'Error: Could not create greeting';
+            }
+        }
+
+        async function clearAllGreetings() {
+            const resultBox = document.getElementById('deleteResult');
+            
+            if (!confirm('Are you sure you want to delete all greetings?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/greetings', {
+                    method: 'DELETE'
+                });
+                const message = await response.text();
+                
+                resultBox.className = 'result-box show success';
+                resultBox.textContent = message;
+                
+                // Clear the greetings list if it's visible
+                document.getElementById('greetingsList').innerHTML = '';
+            } catch (error) {
+                resultBox.className = 'result-box show error';
+                resultBox.textContent = 'Error: Could not delete greetings';
+            }
+        }
+    </script>
+
+</body>
+</html>
