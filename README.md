@@ -2,6 +2,10 @@
 
 A simple Spring Boot REST API web application that provides greeting endpoints with a user-friendly interface.
 
+<p align="center">
+  <img src="https://github.com/wolfieexd/Spring-Boot-Greeting-Web-Application-with-modern-UI/blob/main/sample.png?raw=true" alt="Picture1" />
+</p>
+
 ## Project Overview
 
 This is a Spring Boot application built with:
