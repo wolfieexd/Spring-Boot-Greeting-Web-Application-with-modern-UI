@@ -15,6 +15,8 @@
 2. **Deploy from GitHub**
    - Select "Deploy from GitHub repo"
    - Choose: `wolfieexd/Spring-Boot-Greeting-Web-Application-with-modern-UI`
+   - **Important**: When prompted, enter a simple service name like: `greeting-webapp` or `greeting-api`
+     (Avoid long names or special characters - Railway requires short, simple names)
    - Railway will automatically detect the Spring Boot project
 
 3. **Configuration (Automatic)**
